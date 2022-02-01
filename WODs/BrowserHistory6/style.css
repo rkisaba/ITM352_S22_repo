@@ -1,0 +1,25 @@
+h1,h2{
+    font-family: "Oswald", sans-serif;
+}
+
+body{
+    font-family: "Open Sans" sans-serif;
+    color: yellow;
+    margin: 10px 50px 10px 50px;
+    width: 950px;
+    background-color: black;
+}
+
+img{
+    float: left;  
+}
+
+
+li{
+    display: inline;
+}
+
+#navigationbar a{
+    margin-left: 75px;
+    margin-right: 75px;
+}
