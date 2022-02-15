@@ -3,9 +3,8 @@
 <head>
     <script>
         store_name = "Reese"
-        var hits = 1;
-        var spins = 2;
-        
+        var hits = 0;
+        var spins = 0;
     </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,14 +21,15 @@
 <header>
     <h1><script>document.write(store_name)</script>'s Used Smart Phone Store</h1>
     <p style="text-align: center; font-weight: bold;">
-        Hits:<span id="hits_span">0</span>
+        Hits:<span id="hits_span"><script>document.write(hits)</script></span>
         Spins:<span id="spins_span">0</span>
+        Hit/Spin:<span id="hit_spin_span">0</span>
         </p>
 </header>
     
     <div><main>
     <section class="item" 
-    onclick="hits_span.innerHTML = ++hits;"
+    onclick="hits+=2; hits_span.innerHTML = hits;"
     onmouseover="spins_span.innnerHTML = ++spins;"> 
         <h2>HTC</h2>
         <p> &dollar;40.00</p>
