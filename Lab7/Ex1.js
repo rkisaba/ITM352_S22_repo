@@ -1,22 +1,20 @@
 require("./products_data.js");
 
-var num_products = 5;
+num_products=5
 
-var counter = 1;
+for (var count = 1; eval("typeof name"+ count) != 'undefined'; count++) {
 
-while(counter <= num_products){
-    console.log(`${counter}. ${eval('name' + counter)}` );
-    counter++;
-    if(counter > num_products/2){
-        console.log("Don't ask for anything else")
+    if (count > num_products/2) {
+        console.log("Don't ask for anything else!");
         process.exit();
-        break;
     }
+
+    if (count > 0.25*num_products && count < 0.75*num_products) {
+        console.log(`${eval('name' + count)} is sold out!`);
+        continue;
+    }
+    console.log(`${count}. ${eval('name' + count)}`);
+
 }
-console.log("That's all we have!")
 
-
-for(counter = 1; eval("typeof name"+counter) != 'undefined'; counter++){
-    console.log(`${counter}. ${eval('name' + counter)}` );
-    if(counter > num_products/2){
-        console.log("Don't ask for anything else")
+console.log("That's all we have!");
