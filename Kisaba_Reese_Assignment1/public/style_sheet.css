@@ -24,8 +24,8 @@ img {
     width: 85%;
 }
 
-.footer {
-    padding-top:10px;
+footer {
+    padding: top 25px;
     display: table;
     margin-left: auto;
     flex: auto;

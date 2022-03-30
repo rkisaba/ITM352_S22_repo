@@ -4,7 +4,7 @@ var app = express();
 
 // importing and assigning json with product information to variable
 var data = require("./products_data.json");
-var products_array = data.products_array;
+var items_array = data.items_array;
 
 // importing parser and querystring to package data for requests
 var myParser = require("body-parser");
@@ -31,7 +31,7 @@ function validateStock(cust_qty, stock){
 
 // Routing 
 app.use(myParser.urlencoded({extended : true}));
-app.post("/purchase", function(request, response) {
+app.post("./purchase", function(request, response) {
    let POST = request.body; // assigning req body to var
    
    // validating that all quantities recieved are valid 
@@ -41,7 +41,7 @@ app.post("/purchase", function(request, response) {
       var inStock = true;
 
       // loops through every value and makes sure that values are valid -- has quantities, are valid quantities, and are in stock
-      for (i = 0; i < data.length; i++){
+      for (i = 0; i < items_array.length; i++){
          qty = POST[`quantity${i}`];
          hasQuantities = hasQuantities || qty > 0;
          hasValidQuantities = hasValidQuantities && isNonNegInt(qty);
@@ -55,10 +55,14 @@ app.post("/purchase", function(request, response) {
       if (hasQuantities && hasValidQuantities && inStock) {
             response.redirect("./invoice.html?" + stringified); // send to invoice with req body
       } else {
-         response.redirect("./store.html?" + stringified); // send back to store
+         response.redirect("./products_display.html?" + stringified); // send back to store
       }
    }
    console.log(request.body);
+})
+
+app.post("/purchase_complete", function(request, response){
+   response.redirect("./order_complete.html?");
 })
 
 // monitor all requests

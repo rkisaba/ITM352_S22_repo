@@ -31,37 +31,31 @@
         window.onload = function () {
             let params = (new URL(document.location)).searchParams; //Get the query string which has the form data
             if (params.has('purchase_submit')) {
-                stock_error = false; // assume no stock errors
-                has_errors = false; // assume quantities are valid in the beginning
-                total_qty = 0; // need to check if something was selected so we will look if the total > 0
-                for (i = 0; i < products_array.length; i++) {
+                has_errors = false; //Assume quantities are valid in the beginning
+                total_qty = 0; //Need to check if something was selected so we will look if the total > 0
+                for (i = 0; i < items_array.length; i++) {
                     if (params.has(`quantity${i}`)) {
                         a_qty = params.get(`quantity${i}`);
                         // make textboxes sticky
                         product_form[`quantity${i}`].value = a_qty;
                         total_qty += a_qty;
-                        if (!isNonNegInt(a_qty)) {
+                        if (!FindStringNonNegInt(a_qty)) {
                             has_errors = true; 
                             checkQuantityTextbox(product_form[`quantity${i}`]); //show where the error is
-                        }
-                        if (a_qty > products_array[i]['quantity_available']){
-                            stock_error = true;
                         }
                     }
                 }
 
-                if (has_errors) { // quantity inputted was not valid
-                    alert("Please enter only valid quantities!"); // alert user to ONLY enter valid quantities
+                if (has_errors) { //Quantity inputted was not valid
+                    alert("Please enter only valid quantities!"); //Alert user to ONLY enter valid quantities
                 } else if (total_qty == 0) { // just give a general alert
-                    alert("Please select some quantities!"); // alert to enter quantities if textboxes are empty
-                } else if (stock_error){ // alert that items are out of stock
-                    alert("Out of Stock");
+                    alert("Please select some quantities!"); //Alert to enter quantities if textboxes are empty
                 } else {
                     window.location = `./invoice.html${document.location.search}`;
                     window.stop;
-                }
-            }
-        }
+                };
+            };
+        };
 
 </script>
 
@@ -71,7 +65,7 @@
         <h1>F.O.R.</h1>
     </div>
 
-    <form action="./purchase" method="POST"> 
+    <form action="./purchase" method="POST" name="purchase_submit"> 
 
         <div class="container">
             <div class="left"> <!-- Generates Left column of items -->
@@ -110,9 +104,9 @@
         </div>
     </div>
 
-        <div class="footer">
-                <input type="submit" value="Checkout">
-         </div> 
+        <footer>
+                <input type="submit" value="Checkout" name="purchase_submit">
+        </footer> 
 
 
     </form>

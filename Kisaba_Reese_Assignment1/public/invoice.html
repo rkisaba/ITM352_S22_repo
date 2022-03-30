@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="products_data.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="./style_sheet.css">
+    <link rel="stylesheet" href="style_sheet.css">
     <title>F.O.R. Checkout</title>
 
     <script> // recieving data from server
@@ -55,7 +55,7 @@
         <table>
             <th>Item</th>
             <th>Quantity Added</th>
-            <th>Price Per Unit</th>
+            <th>Price Per Item</th>
             <th>Extended Price</th>
             <script>
                 var subtotal = 0; // subtotal price
@@ -77,7 +77,7 @@
                 var shipping = 0; // shipping
                 if (subtotal < 20){ // subtotal if less than $20
                     shipping = 3;
-                } else if (subtotal >= 20 && subtotal < 50){ // subtotal if less than $50 and over $20
+                } else if (subtotal >= 20 & subtotal < 50){ // subtotal if less than $50 and over $20
                     shipping = 5;
                 } else if (subtotal >= 50) { // subtotal if more than $50
                     shipping = subtotal * 0.05;
