@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+</head>
+
+<body>
+    <form name="quantity_form" action="./process_form" method="POST">
+    <label>quantity desired:</label>
+    <input type = "text" name = "qty_textbox" onkeyup="checkQuantityTextbox(this);">
+    <span id='qty_textbox_message'>Enter a quantity</span>
+    <br>
+    <input name = "purchase_submit" type = "submit" value="Purchase">
+    </form>
+</body>
+</html>
+
+<script>
+    let params = (new URL(document.location)).searchParams;
+    if (params.has('qty_textbox')) {
+        quantity_form['qty_textbox'].value = params.get('qty_textbox');
+        checkQuantityTextbox(quantity_form['qty_textbox']);
+    };
+    function checkQuantityTextbox(the_textbox) {
+    var errs = FindStringNonNegInt (the_textbox.value, true);
+        if (errs.length == 0) {
+            purchase_submit.disabled=false;
+        } else {purchase_submit.disabled=true};
+        qty_textbox_message.innerHTML=errs.join('<font color="red">, </font>');
+    };
+    // This function serves to determine whether an input value is a number and a nonnegative integer.
+    function FindStringNonNegInt(q, returnErrors = false) {
+        errors = []; // Assume no errors at first
+        if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
+        else {
+        if (q < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
+        if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
+        };
+        return (returnErrors ? errors : (errors.length == 0));
+    };
+    var displayPurchase = function () {
+        if (FindStringNonNegInt(qty_textbox.value) == true) {
+        document.body.innerHTML = `Thank you for purchasing ${qty_textbox.value} things!`
+        };
+    };
+</script>

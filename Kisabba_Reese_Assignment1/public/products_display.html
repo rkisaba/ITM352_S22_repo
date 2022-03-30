@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="./products_data.js"></script>
+    <link rel="stylesheet" href="./style_sheet.css">
+    <title>Fear of Reese</title>
+</head>
+
+<script>   
+    
+    function isNonNegInt(q, return_errors = false) {
+            errors = []; //Assumes there are no errors at first
+            if (q == '') q = 0; //Handle inputs as if they are 0
+            if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); //Check string is a number value
+            else if (q < 0) errors.push('<font color="red">Negative value!</font>'); //Check if it is non-neg
+            else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); //Check that it is an integer
+            return return_errors ? errors : (errors.length == 0);
+        }
+
+        function checkQuantityTextbox(theTextbox) {//If there are no errors and textbox field is empty, then display 'Quantity' above the textbox
+            errs = isNonNegInt(theTextbox.value, true); 
+            if (errs.length == 0) errs = ['You want:'];//If a valid entry of quantity is inputted, then display 'You want:' above the textbox
+            if (theTextbox.value.trim() == '') errs = ['Quantity'];
+            document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+        }
+
+</script>
+
+<body>
+
+    <div id="header">
+        <h1>F.O.R.</h1>
+    </div>
+
+    <form action="./purchase" method="POST"> 
+
+        <div class="container">
+            <div class="left"> <!-- Generates Left column of items -->
+                <script>
+                    for (i = 0; i < items_array.length/2; i++){ //Loop to generate 1st half of items starting at 0
+                        document.write(`
+                            <section class='product + ${i}'>
+                                <h2>${items_array[i]['item']}</h2> 
+                                <img src="${items_array[i]['image']}"> 
+                                <p>$${items_array[i]['price'].toFixed(2)}</p> 
+                                <p>Amount In Stock: ${items_array[i]['quantity_available']}</p>
+                                <onkeyup="checkQuantityTextbox(this,${i}));"> 
+                                <input type = 'text' placeholder = '0' id = "quantity${i}"> 
+                            </section>
+                        `)
+                        }
+                </script>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- loop is adjusted from Labs and WODs-->
+            <div class="right"> <!-- Generates Right column of items -->
+                <script>
+                    for (i = items_array.length/2; i < items_array.length; i++){ //Loop to generate 2nd half of items starting at halfway point length/2
+                        document.write(`
+                            <section class='product + ${i}'>
+                                <h2>${items_array[i]['item']}</h2> 
+                                <img src="${items_array[i]['image']}"> 
+                                <p>$${items_array[i]['price'].toFixed(2)}</p> 
+                                <p>Amount In Stock: ${items_array[i]['quantity_available']}</p>
+                                <onkeyup="checkQuantityTextbox(this,${i}));"> 
+                                <input type = 'text' placeholder = '0' id = "quantity${i}"> 
+                            </section>
+                        `)
+                        }
+                </script>
+            </div>
+        </div>
+
+        <div class="footer">
+                <input type="submit" value="Checkout">
+         </div> 
+
+
+    </form>
+
+</body>
+</html>

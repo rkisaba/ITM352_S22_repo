@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Purchase Exercise 3</title>
+</head>
+<body>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        // This function serves to determine whether an input value is a number and a nonnegative integer.
+        function FindStringNonNegInt(q, returnErrors = false) {
+            errors = []; // Assume no errors at first.
+            if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value.
+            else {
+            if (q < 0) errors.push('Negative value!'); // Check if it is non-negative.
+            if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer.
+            return (returnErrors ? errors : (errors.length == 0));
+            };
+        };
+        if(params.has('qty_textbox')) { 
+            // Is the quanity valid? If so, print purchase. If not, give error.
+            if(FindStringNonNegInt(params.get('qty_textbox'))) {
+                document.body.innerHTML = `Thank you for ordering ${params.get('qty_textbox')} items`;
+            } else {
+                document.body.innerHTML = `Invalid quantity. Press the back button and try again.`;
+            };
+        };
+    </script>
+</body>
+</html>
