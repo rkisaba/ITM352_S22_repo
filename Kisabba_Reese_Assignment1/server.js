@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 
 // importing and assigning json with product information to variable
-var data = require("./products_data.json");
+var data = require("./products.json");
 var products_array = data.products_array;
 
 // importing parser and querystring to package data for requests
