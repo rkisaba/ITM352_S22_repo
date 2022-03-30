@@ -81,17 +81,16 @@
                             <section class='product + ${i}'>
                                 <h2>${items_array[i]['item']}</h2> 
                                 <img src="${items_array[i]['image']}"> 
-                                <p>$${items_array[i]['price'].toFixed(2)}</p> 
+                                <p>$${items_array[i]['price'].toFixed(2)}</p>
                                 <p>Amount In Stock: ${items_array[i]['quantity_available']}</p>
-                                <input type = 'text' placeholder = '0' name = "quantity${i}" onkeyup="checkQuantityTextbox(this,${i}));"> 
+                                <label id="quantity${i}_label">Quantity</label>
+                                <input type = 'text' placeholder = '0' name = "quantity${i}" onkeyup="checkQuantityTextbox(this,${i});"> 
                             </section>
                         `)
                         }
                 </script>
             </div>
-        </div>
 
-        <div class="container">
             <!-- loop is adjusted from Labs and WODs-->
             <div class="right"> <!-- Generates Right column of items -->
                 <script>
@@ -102,13 +101,14 @@
                                 <img src="${items_array[i]['image']}"> 
                                 <p>$${items_array[i]['price'].toFixed(2)}</p> 
                                 <p>Amount In Stock: ${items_array[i]['quantity_available']}</p>
-                                <input type = 'text' placeholder = '0' name="${items_array[i]['quantity']}" onkeyup="checkQuantityTextbox(this,${i}));" >
+                                <label id="quantity${i}_label">Quantity</label>
+                                <input type = 'text' placeholder = '0' name="quantity${i}" onkeyup="checkQuantityTextbox(this,${i});">
                             </section>
                         `)
                         }
                 </script>
-            </div>
         </div>
+    </div>
 
         <div class="footer">
                 <input type="submit" value="Checkout">
