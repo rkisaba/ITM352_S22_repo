@@ -12,6 +12,16 @@ const queryString = require('querystring');
 
 app.use(myParser.urlencoded({ extended: true })); // From lab 13
 
+// function -- validates whether inputted values are acceptable, if not, sends errors
+function isNonNegInt(q, returnErrors = false){
+   errors = [];
+   if (q == "") { q = 0; }
+   if (Number(q) != q) { errors.push('Not a Number!'); }
+   if (q < 0) { errors.push('Negative value!'); }
+   if (parseInt(q) != q) { errors.push('Not an Integer!');}
+   return returnErrors ? errors : (errors.length == 0);
+}
+
 // function -- validates whether inputted values are within quantity available range
 function validateStock(cust_qty, stock){
    if (cust_qty > stock){
@@ -43,9 +53,9 @@ app.post("/purchase", function(request, response) {
 
       // if all requirements are met, redirect to invoice, if not , send back to store with errors
       if (hasQuantities && hasValidQuantities && inStock) {
-            response.redirect("./invoice.html" + stringified); // send to invoice with req body
+            response.redirect("./invoice.html?" + stringified); // send to invoice with req body
       } else {
-         response.redirect("./store.html" + stringified); // send back to store
+         response.redirect("./store.html?" + stringified); // send back to store
       }
    }
    console.log(request.body);
@@ -63,13 +73,3 @@ app.use(express.static(__dirname + '/public'));
 
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
-
-// function -- validates whether inputted values are acceptable, if not, sends errors
-function isNonNegInt(q, return_errors = false) {
-   errors = []; //Assumes there are no errors at first
-   if (q == '') q = 0; //Handle inputs as if they are 0
-   if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); //Check string is a number value
-   else if (q < 0) errors.push('<font color="red">Negative value!</font>'); //Check if it is non-neg
-   else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); //Check that it is an integer
-   return return_errors ? errors : (errors.length == 0);
-}

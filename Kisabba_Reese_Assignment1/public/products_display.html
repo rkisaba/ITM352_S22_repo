@@ -68,8 +68,7 @@
                                 <img src="${items_array[i]['image']}"> 
                                 <p>$${items_array[i]['price'].toFixed(2)}</p> 
                                 <p>Amount In Stock: ${items_array[i]['quantity_available']}</p>
-                                <onkeyup="checkQuantityTextbox(this,${i}));"> 
-                                <input type = 'text' placeholder = '0' id = "quantity${i}"> 
+                                <input type = 'text' placeholder = '0' name="${items_array[i]['quantity']}" onkeyup="checkQuantityTextbox(this,${i}));" >
                             </section>
                         `)
                         }
