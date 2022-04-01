@@ -22,14 +22,14 @@ var items_array =
     },
 
     { 
-      "item":"Overalls",  
+      "item":"Black Overalls",  
       "price": 30,  
       "image": "images/overalls.jpg",
       "quantity_available": 15
     },
 
     {  
-      "item":"Casual Hat",  
+      "item":"Casual Fedora",  
       "price": 10,  
       "image": "images/hat.jpg",
       "quantity_available": 22

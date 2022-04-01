@@ -40,10 +40,10 @@ app.post("/purchase", function(request, response) {
 
       // loops through every value and makes sure that values are valid -- has quantities, are valid quantities, and are in stock_quantity
       for (i = 0; i < items_array.length; i++){
-         quantity = POST[`quantity${i}`];
-        input_Quantities = quantity > 0;
-        valid_Quantities = hasValidQuantities && isNonNegInt(quantity);
-        stock_quantity = validatestock_quantity(quantity, items_array[i]['quantity_available']) && isNonNegInt(quantity);
+      quantity = POST[`quantity${i}`];
+      input_Quantities = quantity > 0;
+      valid_Quantities = hasValidQuantities && isNonNegInt(quantity);
+      stock_quantity = validatestock_quantity(quantity, items_array[i]['quantity_available']) && isNonNegInt(quantity);
       }
 
       // package the req.body into a queryString
@@ -62,6 +62,13 @@ app.post("/purchase", function(request, response) {
 app.post("/purchase_complete", function(request, response){
    response.redirect("./order_complete.html?");
 })
+
+
+
+
+
+
+
 
 // monitor all requests
 app.all('*', function (request, response, next) {

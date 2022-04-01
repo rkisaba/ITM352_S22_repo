@@ -1,6 +1,3 @@
-body {
-    background-color: beige
-}
 
 img {
     width: 183px;
@@ -9,13 +6,13 @@ img {
 
 .left {
     float: left;
-    width: 50%;
+    width: 25%;
     flex: auto;
 }
 
 .right {
     float: right;
-    width: 50%;
+    width: 25%;
     flex: auto;
 }
 
@@ -24,9 +21,11 @@ img {
     width: 85%;
 }
 
-footer {
-    padding: top 25px;
-    display: table;
-    margin-left: auto;
-    flex: auto;
+.foot {
+    text-align: center;
+    padding-top: 300%;
+}
+
+.homebutton {
+    text-align: center;
 }
