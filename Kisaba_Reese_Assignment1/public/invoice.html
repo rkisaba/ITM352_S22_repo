@@ -32,12 +32,12 @@
 </head>
 
 <body>
-    <script> // recieving data from server
-        // searching for the parameters in a new URL document location
+    <script> // Receive data from the server
+        // Parameters in a new URL document location
         let params = (new URL(document.location)).searchParams;
-        // create quantities variable
+        // Create quantities
         var quantities = [];
-        // if form was submitted by the user, process the invoice page
+        // Process page if a form was submitted
         if (params.has('purchase_submit')) {
             for (i = 0; i < items_array.length; i++) {
                 if (params.has(`quantity${i}`)) {
@@ -45,6 +45,7 @@
                     quantities[i] = a_qty;
                 }
             }
+        //If no form submitted say No form submitted
         } else {
             document.write('no form submitted');
         }
@@ -61,7 +62,8 @@
             <div class="left">
                 <!-- displaying all ordered products -->
                 <script>
-                    for (i = 0; i < items_array.length; i++) { // goes through each product and displays info
+                    //Displays product info for the respective order
+                    for (i = 0; i < items_array.length; i++) { 
                         if (quantities[i] != 0) {
                             document.write(`
                         <div class='invoice_items'>
@@ -79,18 +81,20 @@
         </div>
         <center>
             <div class="invoice_table">
-                <!-- reciept table -->
+                <!-- Table to display the invoice -->
                 <table border="2" class="center">
                     <th>Item</th>
                     <th>Quantity Added</th>
                     <th>Price Per Item</th>
                     <th>Extended Price</th>
                     <script>
-                        var subtotal = 0; // subtotal price
-                        for (i = 0; i < items_array.length; i++) { // loops through all products to print info
+                        var subtotal = 0; // Subtotal
+                        // Loop for all product information 
+                        for (i = 0; i < items_array.length; i++) { 
                             var extended_price = (items_array[i]['price'] * quantities[i]);
                             subtotal = subtotal + extended_price;
                             if (quantities[i] != 0) {
+                                //Display product order information
                                 document.write(`
                             <tr>
                                 <td style="text-align: center;" width= '15%'>${items_array[i]['item']}</td>
@@ -101,18 +105,18 @@
                         `)
                             }
                         }
-                        var tax = (subtotal * 0.04712); // tax
-                        var shipping = 0; // shipping
-                        if (subtotal < 20) { // subtotal if less than $20
+                        var tax = (subtotal * 0.04712); // Calculate Tax
+                        var shipping = 0; 
+                        if (subtotal < 20) { // Calculate shipping if subtotal is less than $20
                             shipping = 3;
-                        } else if (subtotal >= 20 & subtotal < 50) { // subtotal if less than $50 and over $20
+                        } else if (subtotal >= 20 & subtotal < 50) { // Calculate shipping if subtotal is more than $20, but less than 50
                             shipping = 5;
-                        } else if (subtotal >= 50) { // subtotal if more than $50
+                        } else if (subtotal >= 50) { // Calculate shipping if subtotal is more than $50
                             shipping = subtotal * 0.05;
                         }
-                        var total = (subtotal + shipping + tax) // calcualting grand total
+                        var total = (subtotal + shipping + tax) // Calculate Grand Total
 
-                        // displaying subtotal, tax, shipping, and grand total
+                        // Display Subtotal, Tax (fixed to 2 decimals), Shipping, and Grand Total
                         document.write(`
                     <tr>
                         <td style="text-align: center;" colspan='3'>Subtotal</td>
