@@ -1,0 +1,74 @@
+<!-- Store/Products Display Page for Reese Kisaba Assignment 1 -->
+<!-- w3 Schools Architect Template-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fear of Reese</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="./style_sheet.css">
+    <script type="text/javascript" src="./products_data.js"></script>
+
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        var quantities = [];
+        for (i = 0; i < products_array.length; i++) {
+            if (params.has(`quantity${i}`)) {
+                a_qty = params.get(`quantity${i}`);
+                quantities[i] = a_qty;
+            }
+        }
+
+        window.onload = function () {
+            if (quantities.length != 0) {
+                for (i = 0; i < products_array.length; i++) {
+                    if (quantities[i] != 0) {
+                        document.getElementById(`quantity${i}`).value = quantities[i];
+                    }
+                }
+            }
+        }
+
+    </script>
+
+<body>
+    <form action="/login" method="POST">
+        <div class="login_form">
+            <h1>F.O.R. LOGIN</h1>
+            <p>Please enter your username and password</p>
+            <div class="email_input">
+                <label for="email">USERNAME</label>
+                <input type="text" id="user" name="user">
+            </div>
+            <div class="pass_input">
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="login_submit">
+                <input type="submit" value="Log in">
+            </div>
+        </div>
+        <script>
+            if (quantities.length != 0) {
+                for (i = 0; i < products_array.length; i++) {
+                    document.write(`
+                    <input type="hidden" id="quantity${i}" name="quantity${i}" value="0">
+                `)
+                }
+            }
+
+        </script>
+    </form>
+    <form action="/register" method="GET">
+        <div class="register">
+            <input type="submit" value="Register">
+        </div>
+    </form>
+
+</body>
+
+</html>
