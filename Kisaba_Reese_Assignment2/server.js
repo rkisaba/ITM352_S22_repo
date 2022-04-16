@@ -6,7 +6,7 @@ var app = express();
 // Import and assign product information from products_data
 var items_array = require("./products_data.json");
 
-var filename = __dirname + '/user_data.json';
+var filename = 'user_data.json';
 
 const fs = require("fs");
 if (fs.existsSync(filename)) {
@@ -24,48 +24,54 @@ var myParser = require("body-parser");
 const queryString = require('querystring');
 
 // Taken from lab 13
-app.use(myParser.urlencoded({ extended: true })); 
+app.use(myParser.urlencoded({ extended: true }));
 
 // Validate whether or not inputs are valid
-function isNonNegInt(q, returnErrors = false){
-   errors = [];
-   if (q == "") { q = 0; }
-   if (Number(q) != q) { errors.push('Not a Number!'); } //String is not a number, error Not a Number
-   if (q < 0) { errors.push('Negative value!'); } //String is negative value, error Negative Value
-   if (parseInt(q) != q) { errors.push('Not an Integer!');} //String is not an integer, error Not an Integer
-   return returnErrors ? errors : (errors.length == 0);
+function isNonNegInt(q, returnErrors = false) {
+    errors = [];
+    if (q == "") { q = 0; }
+    if (Number(q) != q) { errors.push('Not a Number!'); } //String is not a number, error Not a Number
+    if (q < 0) { errors.push('Negative value!'); } //String is negative value, error Negative Value
+    if (parseInt(q) != q) { errors.push('Not an Integer!'); } //String is not an integer, error Not an Integer
+    return returnErrors ? errors : (errors.length == 0);
 }
 
 // Adopted from Lab 13 Exercise 3.
 app.use(express.urlencoded({ extended: true }));
 // Checks for the existence of the file, from Lab 14
-if (fs.existsSync(filename)) { 
+if (fs.existsSync(filename)) {
     var data = fs.readFileSync(filename, 'utf-8'); // if it exists, read the file user_data.json storedin filename
     var user_data = JSON.parse(data); // parse user data
-  } 
+}
 
-// POST request from signin.html. Adopted from Assignment 2 code examples on ITM 352 website
 app.post("/process_login", function (req, res) {
-    var the_email = req.body.email.toLowerCase();
-    if (typeof user_data[the_email] != 'undefined') {
-        if (user_data[the_email].password == req.body.password) { // Check if password matches email.
-            // if there are no errors, store user info in temp_qty_data and send to invoice.  
-            temp_qty_data['email'] = the_email;
-            temp_qty_data['email'] = user_data[the_email].email;       
-            let params = new URLSearchParams(temp_qty_data);
-            res.redirect('/invoice.html?' + params.toString()); // Send to invoice page if login successful.
-            return; // end process
-        } else { // else (the_username password does not match the password entered), then there's an error
-            req.query.email = the_email;
-            req.query.LoginError = 'Invalid password!'; // Error message for wrong password.
+    var LogError = [];
+    console.log(req.query);
+    the_username = req.body.username.toLowerCase; //username in lowercase
+    if (typeof user_data[the_username] != 'undefined') { //matching username
+        if (user_data[the_username].password == req.body.password) {
+            console.log(req.query);
+            req.query.username = the_username;
+            console.log(user_data[req.query.username].name);
+            req.query.name = user_data[req.query.username].name
+            res.redirect('/invoice.html?' + queryString.stringify(req.query));
+            return; // all good, send to invoice
+        } else { //password wrong, show invalid password
+            LogError.push = ('Invalid Password');
+            console.log(LogError);
+            req.query.username = the_username;
+            req.query.name = user_data[the_username].name;
+            req.query.LogError = LogError.join(';');
         }
-    } else { // else (the _username is undefined), there's an error
-        req.query.LoginError  = 'Invalid Email!'; // Error message for user that doesn't exist.
-    } 
-    // otherwise back to login with errors.    
-    params = new URLSearchParams(req.query);
-    res.redirect("./login.html?" + params.toString()); // Redirect to signin.html if errors.
+    } else { //push to the user invalid username if username is incorrect 
+        LogError.push = ('Invalid Username');
+        console.log(LogError);
+        req.query.username = the_username;
+        req.query.LogError = LogError.join(';');
+    }
+    res.redirect('./login.html?' + queryString.stringify(req.query));
 });
+
 
 // POST request from signup.html. Received help from Professor Port
 // Registration validation (each validation adopted from https://www.w3resource.com/javascript/form/javascript-sample-registration-form-validation.php)
@@ -76,10 +82,10 @@ app.post("/process_register", function (req, res) {
 
     // EMAIL VALIDATION
     if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(req.body.email)) { //check if the Email is correct
-    } 
+    }
     else {
         reg_errors['email'] = "Invalid email."; // error message for email that doesn't match format of name@website.domain
-    } 
+    }
     if (typeof user_data[reg_email] != 'undefined') { // Email must be unique
         reg_errors['email'] = 'This email is already taken!'; // error message if username is already in user_data.json file
     }
@@ -89,7 +95,7 @@ app.post("/process_register", function (req, res) {
     } else {
         reg_errors['fullname'] = "Enter a name with alphabet characters only."; // error message if name contains numbers or invalid characters/symbols
     }
-    
+
     if (req.body.fullname.length > 30 && req.body.fullname.length < 1) { // 30 characters or less
         reg_errors['fullname'] = "Name must be less than 30 characters."; // error message if name exceeds 30 characters or nothing in there
     }
@@ -104,7 +110,7 @@ app.post("/process_register", function (req, res) {
     if (req.body.username.length > 10 || req.body.username.length < 4) { // 4-10 characters
         reg_errors['username'] = "Username must be 4-10 characters."; // error message if username is under 4 characters or over 10 characters
     }
-    
+
     if (typeof user_data[reg_username] != 'undefined') { // Username must be unique
         reg_errors['username'] = 'This username is already taken!'; // error message if username is already in user_data.json file
     }
@@ -119,25 +125,25 @@ app.post("/process_register", function (req, res) {
         reg_errors['confirmpassword'] = "Passwords do not match." // error message if passwords don't match
     }
 
-    
+
     // Save registration data to json file and send to invoice page if registration successful. 
     // Taken from Lab 14 Exercise 4.
-    if (JSON.stringify(reg_errors) == '{}') { 
-        var email= req.body['email'].toLowerCase();
+    if (JSON.stringify(reg_errors) == '{}') {
+        var email = req.body['email'].toLowerCase();
         user_data[email] = {};
         // information entered is added to user_data
-        user_data[email]['name'] = req.body['fullname']; 
+        user_data[email]['name'] = req.body['fullname'];
         user_data[email]['password'] = req.body['password'];
         user_data[email]['email'] = req.body['email'];
 
         // stored data of purchase info goes into temp_qty_data
-       fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
+        fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
 
         // username and email from temp_qty_data variable added into file as username and email
         temp_qty_data['email'] = email;
         temp_qty_data['email'] = user_data[email]["username"];
         let params = new URLSearchParams(temp_qty_data);
-        res.redirect('./invoice.html?' + params.toString());return; // go to invoice at the end of a successful registration process
+        res.redirect('./invoice.html?' + params.toString()); return; // go to invoice at the end of a successful registration process
     }
 
     // Otherwise back to registration with the registration errors.    
@@ -145,45 +151,46 @@ app.post("/process_register", function (req, res) {
         req.body['reg_errors'] = JSON.stringify(reg_errors);
         let params = new URLSearchParams(req.body);
         res.redirect('register.html?' + params.toString()); // redirect to signup page after errors popup
-      }
+    }
 });
 
 // Inputted quantities are less than stock
-function validatestock_quantity(quantity_input, stock_quantity){
-   if (quantity_input > stock_quantity){
-      return false;
-   }
+function validatestock_quantity(quantity_input, stock_quantity) {
+    if (quantity_input > stock_quantity) {
+        return false;
+    }
 }
 
 // Routing 
-app.use(myParser.urlencoded({extended : true}));
-app.post("/purchase", function(request, response) {
-   let POST = request.body; // assigning req body to var
-   
-   // Validate inputted quantities
-   if (typeof POST['purchase_submit'] != 'undefined') { // validating quantities, and valid quantities
-      var hasValidQuantities = true;
-      var hasQuantities = false;
-      var stock_quantity = true;
+app.use(myParser.urlencoded({ extended: true }));
+app.post("/purchase", function (request, response) {
+    let POST = request.body; // assigning req body to var
 
-      // Check to see that valid quantities are in stock
-      for (i = 0; i < items_array.length; i++){
-      quantity = POST[`quantity${i}`];
-      input_Quantities = quantity > 0;
-      valid_Quantities = hasValidQuantities && isNonNegInt(quantity);
-      stock_quantity = validatestock_quantity(quantity, items_array[i]['quantity_available']) && isNonNegInt(quantity);
-      }
+    // Validate inputted quantities
+    if (typeof POST['purchase_submit'] != 'undefined') { // validating quantities, and valid quantities
+        var hasValidQuantities = true;
+        var hasQuantities = false;
+        var stock_quantity = true;
 
-      // Make into queryString
-      const stringified = queryString.stringify(POST); 
+        // Check to see that valid quantities are in stock
+        for (i = 0; i < items_array.length; i++) {
+            quantity = POST[`quantity${i}`];
+            hasQuantities = quantity > 0;
+            hasvalidQuantities = hasValidQuantities && isNonNegInt(quantity);
+            stock_quantity = validatestock_quantity(quantity, items_array[i]['quantity_available']) && isNonNegInt(quantity);
+        }
 
-      if (hasQuantities && hasValidQuantities && stock_quantity) {
-            response.redirect("./login.html?" + stringified); // Send to invoice page
-      } else {
-       response.redirect("./products_display.html?" + stringified); // Send back to store
-      }
-   }
-   console.log(request.body);
+        // Make into queryString
+        const stringified = queryString.stringify(POST);
+
+        if (hasQuantities && hasValidQuantities && stock_quantity) {
+            response.redirect("./invoice.html?" + stringified);
+            return;
+        } else {
+            response.redirect("./products_display.html?" + stringified); // Send back to store
+        }
+    }
+    console.log(request.body);
 })
 
 
@@ -196,8 +203,8 @@ app.post("/purchase", function(request, response) {
 
 // monitor all requests
 app.all('*', function (request, response, next) {
-   console.log(request.method + ' to ' + request.path);
-   next();
+    console.log(request.method + ' to ' + request.path);
+    next();
 });
 
 

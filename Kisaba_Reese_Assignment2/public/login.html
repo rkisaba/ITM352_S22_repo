@@ -12,9 +12,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
     <link rel="stylesheet" href="./style_sheet.css">
     <script type="text/javascript" src="./products_data.js"></script>
+    <script>
+        //remind the users if they have errors on username and password
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function () {
+            if (params.has('LogError')) {
+                alert('Invalid Username or Passowrd');
+            }
+        }
+    </script>
 
 <body>
-    <form action="/login" method="POST">
+    <script>
+        document.write(`<form action="process_login${location.search}" method="post">`);
+    </script>
+    <form action="/process_login" method="POST">
         <div class="login_form">
             <h1>F.O.R. LOGIN</h1>
             <p>Please enter your username and password</p>
@@ -30,23 +42,8 @@
                 <input type="submit" value="Log in">
             </div>
         </div>
-        <script>
-            if (quantities.length != 0) {
-                for (i = 0; i < products_array.length; i++) {
-                    document.write(`
-                    <input type="hidden" id="quantity${i}" name="quantity${i}" value="0">
-                `)
-                }
-            }
 
-        </script>
     </form>
-    <form action="/register" method="GET">
-        <div class="register">
-            <input type="submit" value="Register">
-        </div>
-    </form>
-
 </body>
 
 </html>
