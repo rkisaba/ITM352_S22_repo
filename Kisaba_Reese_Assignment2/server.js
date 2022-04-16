@@ -6,6 +6,19 @@ var app = express();
 // Import and assign product information from products_data
 var items_array = require("./products_data.json");
 
+var filename = __dirname + '/user_data.json';
+
+const fs = require("fs");
+if (fs.existsSync(filename)) {
+    //Read filename (from my Lab 14 Ex1b.js)
+    var user_info = fs.readFileSync(filename, 'utf-8');
+    var user_data = JSON.parse(user_info);
+}
+else {
+    console.log(filename + ' does not exist.');
+    user_data = {};
+}
+
 // Importing parser and querystring
 var myParser = require("body-parser");
 const queryString = require('querystring');

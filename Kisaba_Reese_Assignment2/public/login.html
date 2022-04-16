@@ -13,28 +13,6 @@
     <link rel="stylesheet" href="./style_sheet.css">
     <script type="text/javascript" src="./products_data.js"></script>
 
-    <script>
-        let params = (new URL(document.location)).searchParams;
-        var quantities = [];
-        for (i = 0; i < products_array.length; i++) {
-            if (params.has(`quantity${i}`)) {
-                a_qty = params.get(`quantity${i}`);
-                quantities[i] = a_qty;
-            }
-        }
-
-        window.onload = function () {
-            if (quantities.length != 0) {
-                for (i = 0; i < products_array.length; i++) {
-                    if (quantities[i] != 0) {
-                        document.getElementById(`quantity${i}`).value = quantities[i];
-                    }
-                }
-            }
-        }
-
-    </script>
-
 <body>
     <form action="/login" method="POST">
         <div class="login_form">
