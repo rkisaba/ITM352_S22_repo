@@ -1,0 +1,31 @@
+
+img {
+    width: 183px;
+    height: 275px;
+}
+
+.left {
+    float: left;
+    width: 25%;
+    flex: auto;
+}
+
+.right {
+    float: right;
+    width: 25%;
+    flex: auto;
+}
+
+.container {
+    margin:  auto;
+    width: 85%;
+}
+
+.foot {
+    text-align: center;
+    padding-top: 300%;
+}
+
+.homebutton {
+    text-align: center;
+}

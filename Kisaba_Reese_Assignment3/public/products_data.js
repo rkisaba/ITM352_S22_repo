@@ -1,0 +1,128 @@
+var items_array =
+[
+  {  
+    "item":"Ripped Jeans",  
+    "price": 50,  
+    "image": "images/ripped_jeans.jpg",
+    "quantity_available": 28
+  },
+
+  {  
+    "item":"White T-Shirt",  
+    "price": 15,  
+    "image": "images/white_tshirt.jpg",
+    "quantity_available": 44
+  },
+
+  {  
+    "item":"Black T-Shirt",  
+    "price": 15,  
+    "image": "images/black_tshirt.jpg",
+    "quantity_available": 68
+  },
+
+  { 
+    "item":"Overalls",  
+    "price": 30,  
+    "image": "images/overalls.jpg",
+    "quantity_available": 15
+  },
+
+  {  
+    "item":"Casual Hat",  
+    "price": 10,  
+    "image": "images/hat.jpg",
+    "quantity_available": 22
+  },
+
+  {  
+    "item":"Crew Socks",  
+    "price": 3,  
+    "image": "images/socks.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"Earrings",  
+    "price": 10,  
+    "image": "images/earrings.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"2 Pack Rings",  
+    "price": 8,  
+    "image": "images/2ring.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"4 Pack Bracelets",  
+    "price": 9,  
+    "image": "images/4bracelet.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"5 Pack Rings",  
+    "price": 13,  
+    "image": "images/5ring.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"3 Pack Rings",  
+    "price": 11,  
+    "image": "images/3ring.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"Necklace",  
+    "price": 8,  
+    "image": "images/necklace.jpg",
+    "quantity_available": 32
+  },
+
+  {  
+    "item":"Casual Sneaker",  
+    "price": 20,  
+    "image": "images/color_sneaker.jpg",
+    "quantity_available": 12
+  },
+
+  {  
+    "item":"Platform Boots",  
+    "price": 25,  
+    "image": "images/platform_boot.jpg",
+    "quantity_available": 12
+  },
+
+  {  
+    "item":"Derby Shoes",  
+    "price": 25,  
+    "image": "images/derby_shoe.jpg",
+    "quantity_available": 12
+  },
+
+  {  
+    "item":"Chelsea Boots",  
+    "price": 25,  
+    "image": "images/chelsea_boot.jpg",
+    "quantity_available": 12
+  },
+
+  {  
+    "item":"Canvas Shoes",  
+    "price": 15,  
+    "image": "images/canvas_shoe.jpg",
+    "quantity_available": 12
+  },
+
+  {  
+    "item":"Athletic Sneakers",  
+    "price": 20,  
+    "image": "images/athletic_sneaker.jpg",
+    "quantity_available": 12
+  }
+]

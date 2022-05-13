@@ -1,0 +1,169 @@
+<!-- Invoice Page for Reese Kisaba Assignment 1 -->
+<!-- w3 Schools Architect Template-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>F.O.R. Checkout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <script src="products_data.js" type="text/javascript"></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+            font-family: "Inconsolata", sans-serif;
+        }
+
+        .bgimg {
+            background-position: center;
+            background-size: cover;
+            background-image: url("/w3images/coffeehouse.jpg");
+            min-height: 75%;
+        }
+
+        .menu {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script> // Receive data from the server
+        // Parameters in a new URL document location
+        let params = (new URL(document.location)).searchParams;
+        // Create quantities
+        var quantities = [];
+        // Process page if a form was submitted
+        if (params.has('purchase_submit')) {
+            for (i = 0; i < items_array.length; i++) {
+                if (params.has(`quantity${i}`)) {
+                    a_qty = params.get(`quantity${i}`);
+                    quantities[i] = a_qty;
+                }
+            }
+        //If no form submitted say No form submitted
+        } else {
+            document.write('no form submitted');
+        }
+        console.log(quantities);
+    </script>
+    </head>
+
+    <body>
+        <div class="invoice_header">
+            <!-- header -->
+            <h1>Let's see what's in your cart...</h1>
+        </div>
+        <div class="container">
+            <div class="left">
+                <!-- displaying all ordered products -->
+                <script>
+                    //Displays product info for the respective order
+                    for (i = 0; i < items_array.length; i++) { 
+                        if (quantities[i] != 0) {
+                            document.write(`
+                        <div class='invoice_items'>
+                            <img src='${items_array[i]['image']}'>
+                            <p><strong>${items_array[i]['item']}</strong></p>
+                            <p>Quantity: ${quantities[i]}</p>
+                            <p>$${items_array[i]['price'].toFixed(2)}</p>
+                            <p>Total: $${(Number(items_array[i]['price']) * Number(quantities[i])).toFixed(2)}</p>
+                        </div>
+                    `)
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+        <center>
+            <div class="invoice_table">
+                <!-- Table to display the invoice -->
+                <table border="2" class="center">
+                    <th>Item</th>
+                    <th>Quantity Added</th>
+                    <th>Price Per Item</th>
+                    <th>Extended Price</th>
+                    <script>
+                        var subtotal = 0; // Subtotal
+                        // Loop for all product information 
+                        for (i = 0; i < items_array.length; i++) { 
+                            var extended_price = (items_array[i]['price'] * quantities[i]);
+                            subtotal = subtotal + extended_price;
+                            if (quantities[i] != 0) {
+                                //Display product order information
+                                document.write(`
+                            <tr>
+                                <td style="text-align: center;" width= '15%'>${items_array[i]['item']}</td>
+                                <td style="text-align: center;" width= '15%'>${quantities[i]}</td>
+                                <td style="text-align: center;" width= '15%'>$${items_array[i]['price'].toFixed(2)}</td>
+                                <td style="text-align: center;" width= '15%'>$${(items_array[i]['price'] * quantities[i]).toFixed(2)}
+                            </tr>
+                        `)
+                            }
+                        }
+                        var tax = (subtotal * 0.04712); // Calculate Tax
+                        var shipping = 0; 
+                        if (subtotal < 20) { // Calculate shipping if subtotal is less than $20
+                            shipping = 3;
+                        } else if (subtotal >= 20 & subtotal < 50) { // Calculate shipping if subtotal is more than $20, but less than 50
+                            shipping = 5;
+                        } else if (subtotal >= 50) { // Calculate shipping if subtotal is more than $50
+                            shipping = subtotal * 0.05;
+                        }
+                        var total = (subtotal + shipping + tax) // Calculate Grand Total
+
+                        // Display Subtotal, Tax (fixed to 2 decimals), Shipping, and Grand Total
+                        document.write(`
+                    <tr>
+                        <td style="text-align: center;" colspan='3'>Subtotal</td>
+                        <td style="text-align: center;" colspan='3'>$${subtotal.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan='3'>Tax (4.712%)</td>
+                        <td style="text-align: center;" colspan='3'>$${tax.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan='3'>Shipping</td>
+                        <td style="text-align: center;" colspan='3'>$${shipping.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;" colspan='3'>Total</th>
+                        <td style="text-align: center;" colspan='3'>$${total.toFixed(2)}</td>    
+                    </tr>
+                `)
+                    </script>
+                </table>
+
+                <tr>
+                    <td style="text-align: center;" colspan="4">
+                        <br><strong>Shipping Policy:</strong>
+                        <br>
+                        <br><strong>$0 - $19.99:</strong> $3
+                        <br><strong>$20.00 - $49.99:</strong> $5
+                        <br><strong>$50.00+:</strong> 5% of subtotal</br>
+
+                    </td>
+                </tr>
+
+            </div>
+        </center>
+    </body>
+
+</html>
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank"
+            class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+
+</html>
